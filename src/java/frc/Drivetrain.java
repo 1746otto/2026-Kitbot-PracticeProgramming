@@ -10,39 +10,20 @@ public class DriveTrain extends SubsystemBase {
     private final TalonFX leftBackMotor = new TalonFX(2);
     private final TalonFX rightBackMotor = new TalonFX(3);
 
-    private final XboxController driverController =
-        new XboxController(0);
+    private final XboxController driverController = new XboxController(0);
 
     public DriveTrain() {
     }
 
     public void driveWithController() {
+        double forward = -driverController.getLeftY();
+        double turn = driverController.getRightX();
 
-        double forward = inverse(driverController.getLeftY());
-        double turn = inverse(driverController.getRightX());
+        leftFrontMotor.set(forward + turn);
+        leftBackMotor.set(forward + turn);
 
-        if (driverController.getRightTriggerAxis()) {
-
-            leftFrontMotor.set(0.8);
-            rightFrontMotor.set(0.8);
-            leftBackMotor.set(0.8);
-            rightBackMotor.set(0.8);
-
-        } else if (driverController.getRightBumper()) {
-
-            leftFrontMotor.set(-0.8);
-            rightFrontMotor.set(-0.8);
-            leftBackMotor.set(-0.8);
-            rightBackMotor.set(-0.8);
-
-        } else {
-
-            leftFrontMotor.set(forward + turn);
-            leftBackMotor.set(forward + turn);
-
-            rightFrontMotor.set(forward - turn);
-            rightBackMotor.set(forward - turn);
-        }
+        rightFrontMotor.set(forward - turn);
+        rightBackMotor.set(forward - turn);
     }
 
     public void stop() {
