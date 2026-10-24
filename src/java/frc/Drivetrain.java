@@ -12,10 +12,15 @@ public class DriveTrain extends SubsystemBase {
     private final TalonFX rightBackMotor = new TalonFX(3);
 
     private final XboxController driverController = new XboxController(0);
+    // Below this comment, the objects are for acceleration when turning or moving forward or backwards
     private final SlewRateLimiter forwardLimiter = new SlewRateLimiter(1.5);
     private final SlewRateLimiter turnLimiter = new SlewRateLimiter(2.0);
 
     public DriveTrain() {
+        leftFrontMotor.setInverted(false);
+        leftBackMotor.setInverted(false);
+        rightFrontMotor.setInverted(true);
+        rightBackMotor.setInverted(true);
     }
 
     public void driveWithController() {
